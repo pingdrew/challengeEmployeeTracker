@@ -6,32 +6,32 @@ CREATE DATABASE tracker_db;
 USE tracker_db;
 
 -- Creates the department table
-CREATE TABLE department(
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(30)
+CREATE TABLE department (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  department_name VARCHAR(30) NOT NULL
 );
 
--- Creates the role table
-CREATE TABLE role (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(30),
-    salary DECIMAL,
-    department INT,
-    FOREIGN KEY (department)
-    REFERENCES department(id)
-    ON DELETE SET NULL
+-- Creates the roles table
+CREATE TABLE roles (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+  title VARCHAR(30) NOT NULL,
+  salary DECIMAL NOT NULL,
+  department_id INT NOT NULL,
+  FOREIGN KEY (department_id)
+  REFERENCES department(id)
+  ON DELETE CASCADE
 );
 
--- Creates the employee table
-CREATE TABLE employee (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    role INT,
-    -- manager INT,
-    FOREIGN KEY (role)
-    REFERENCES role(id)
-    -- TODO manager key stuff
-    -- FOREIGN KEY (manager)
-    -- REFERENCES employee(id)
+-- Creates the employees table
+CREATE TABLE employees (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  first_name VARCHAR(30) NOT NULL,
+  last_name VARCHAR(30) NOT NULL,
+  role_id INT NOT NULL,
+  manager_id INT,
+  FOREIGN KEY (manager_id)
+  REFERENCES employees(id),
+  FOREIGN KEY (role_id)
+  REFERENCES roles (id)
+  ON DELETE CASCADE
 );
